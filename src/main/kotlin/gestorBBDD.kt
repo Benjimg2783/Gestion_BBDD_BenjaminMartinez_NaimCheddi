@@ -23,7 +23,7 @@ class GestorBBDD {
     fun getConnection() {
         conexion = DriverManager.getConnection(url + bd, user, pass)
     }
-    fun selectUser(user:String,pass:String): Boolean {
+    private fun selectUser(user:String, pass:String): Boolean {
         var comprobador=true
         val ps = conexion!!.prepareStatement(Consultas.selectUser)
         ps.setString(1,user)
@@ -35,7 +35,7 @@ class GestorBBDD {
         }catch (_:Exception){comprobador=false}
         return comprobador
     }
-    fun insertUser(user: String,pass: String):Boolean{
+    private fun insertUser(user: String, pass: String):Boolean{
         val ps =conexion!!.prepareStatement(UpdateUsers.insertUser)
         ps.setString(1,user)
         ps.setString(2,pass)
@@ -72,12 +72,4 @@ class GestorBBDD {
         }
         return comprobador
     }
-}
-fun main(){
-    val gestorBBDD=GestorBBDD.getInstance()
-    if (gestorBBDD != null) {
-        gestorBBDD.getConnection()
-        println(gestorBBDD.comprobadorUsuario("Benjamin","234"))
-    }
-
 }
