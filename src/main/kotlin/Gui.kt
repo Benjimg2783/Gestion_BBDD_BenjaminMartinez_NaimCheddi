@@ -13,9 +13,9 @@ class Gui(private val gest: GestorBBDD? = GestorBBDD.getInstance()) {
     fun welcome() : Boolean{
 
         var checking = true
-        var user = ""
-        var pass = ""
-        var answer = ""
+        var user :String
+        var pass :String
+        var answer :String
         println("¿Dispone de un Usuario en el sistema? Y/N")
         answer = readln()
         if (answer.uppercase() == "Y" || answer.uppercase() == "YES" || answer.uppercase() == "S" || answer.uppercase() == "SI") {
@@ -36,7 +36,7 @@ class Gui(private val gest: GestorBBDD? = GestorBBDD.getInstance()) {
                             user = readln()
                             println("Introduce la contraseña")
                             pass = readln()
-                            if (gest!!.selectUser(user, pass)) {
+                            if (gest.selectUser(user, pass)) {
                                 check = true
                             } else {
                                 println("Usuario no encontrado")
@@ -44,7 +44,7 @@ class Gui(private val gest: GestorBBDD? = GestorBBDD.getInstance()) {
                             }
                         }
                         "2" -> {
-                            if (gest!!.insertUser(user, pass)) {
+                            if (gest.insertUser(user, pass)) {
                                 println("¡Usuario registrado con exito!")
                                 check = true
                             } else {
@@ -92,8 +92,7 @@ class Gui(private val gest: GestorBBDD? = GestorBBDD.getInstance()) {
                         "7. Actualizar la cantidad de un producto \n" +
                         "8. Salir"
             )
-            val select = readln()
-            when (select) {
+            when (readln()) {
                 "1" -> {
                     gest?.selectAllProducts()
                 }
@@ -117,9 +116,9 @@ class Gui(private val gest: GestorBBDD? = GestorBBDD.getInstance()) {
                     println("Que nombre tiene el producto?")
                     val name = readln()
                     println("Que precio tiene el producto (EJ: 100.00)")
-                    val precio = 0.0
+                    var precio = 0.0
                     try {
-                        val precio = readln().toDouble()
+                        precio = readln().toDouble()
                     } catch (e: java.lang.Exception) {
                         println("Error al leer el formato, siga el ejemplo")
                     }
@@ -146,7 +145,7 @@ class Gui(private val gest: GestorBBDD? = GestorBBDD.getInstance()) {
                     println("Introduzca el nombre del producto que desea actualizar")
                     val name = readln()
                     println("Introduzca el precio que desea que tenga el producto")
-                    var price = 0.0
+                    var price :Double
                     try {
                         price = readln().toDouble()
                         if(gest?.updateProductPrice(name,price)==false){
@@ -160,7 +159,7 @@ class Gui(private val gest: GestorBBDD? = GestorBBDD.getInstance()) {
                     println("Introduzca el nombre del producto que desea actualizar")
                     val name = readln()
                     println("Introduzca la cantidad que desea que tenga el producto")
-                    var cantidad = 0
+                    var cantidad :Int
                     try {
                         cantidad = readln().toInt()
                         if(gest?.updateProductAmount(name,cantidad)==false){

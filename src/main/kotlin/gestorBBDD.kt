@@ -9,8 +9,8 @@ class GestorBBDD {
         fun getInstance(): GestorBBDD? {
             if (instance == null) {
                 instance = GestorBBDD()
-                println("[CONEXION REALIZADA]")
-            } else (println("[CONEXION EXISTENTE]"))
+                println("[INSTANCIA DE LA BASE DE DATOS CREADA]")
+            } else (println("[INSTANCIA EXISTENTE]"))
             return instance
         }
     }
@@ -58,7 +58,6 @@ class GestorBBDD {
     }
 
     fun selectProduct(producto: String): String {
-        var comprobador = true
         val ps = conexion!!.prepareStatement(Consultas.selectProductoByName)
         ps.setString(1, producto)
         val rs = ps.executeQuery()
