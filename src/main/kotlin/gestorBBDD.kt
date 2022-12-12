@@ -20,7 +20,7 @@ class GestorBBDD {
     private val bd: String = "bd_proyectoTema2"
     private val user: String = "root"
     private val pass: String = ""
-    fun getConnection() : Boolean {
+    fun getConnection(): Boolean {
         return try {
             conexion = DriverManager.getConnection(url + bd, user, pass)
             true
@@ -123,6 +123,7 @@ class GestorBBDD {
             println("Error en la actualización del precio de $producto")
         }
         return rs > 0
+
     }
     fun updateProductAmount(producto: String,cantidad: Int):Boolean{
         val ps = conexion!!.prepareStatement(Modificaciones.updateProductAmount)

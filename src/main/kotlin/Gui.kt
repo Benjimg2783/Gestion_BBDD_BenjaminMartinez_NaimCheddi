@@ -24,7 +24,7 @@ class Gui(private val gest: GestorBBDD? = GestorBBDD.getInstance()) {
             pass = readln()
             if (gest!!.selectUser(user, pass)) {
                 println("Usuario Correcto")
-            }else{
+            } else {
                 println("El usuario o contraseña no son correctos o no existe en el sistema, ¿Que desea hacer? \n1.Volver a intentarlo\n2.Registrar el usuario")
                 val registro = readln()
                 var check = false
@@ -37,7 +37,7 @@ class Gui(private val gest: GestorBBDD? = GestorBBDD.getInstance()) {
                             pass = readln()
                             if (gest!!.selectUser(user, pass)) {
                                 check = true
-                            }else{
+                            } else {
                                 println("Usuario no encontrado")
                             }
                         }
@@ -50,15 +50,16 @@ class Gui(private val gest: GestorBBDD? = GestorBBDD.getInstance()) {
 
                         }
                         else -> {
-                            println("Seleccione 1 o 2")}
+                            println("Seleccione 1 o 2")
+                        }
                     }
                 }
 
             }
         } else {
             println("Desea registrar un nuevo usuario?Y/N")
-            answer= readln()
-            if (answer.uppercase() == "Y" || answer.uppercase() == "YES" || answer.uppercase() == "S" || answer.uppercase() == "SI"){
+            answer = readln()
+            if (answer.uppercase() == "Y" || answer.uppercase() == "YES" || answer.uppercase() == "S" || answer.uppercase() == "SI") {
                 println("Introduce el usuario")
                 user = readln()
                 println("Introduce la contraseña")
@@ -68,7 +69,99 @@ class Gui(private val gest: GestorBBDD? = GestorBBDD.getInstance()) {
                 } else {
                     println("El usuario ya existe o caracteres invalidos")
                 }
-            }else println("Usuario no encontrado")
+            } else println("Usuario no encontrado")
+        }
+    }
+
+    fun inventory() {
+        var comprobar = false
+        while (comprobar) {
+            println("MENU INVENTARIO")
+            println(
+                "1. Ver todos los productos \n" +
+                        "2. Seleccionar un productto \n" +
+                        "3. Buscar un producto por su precio \n" +
+                        "4. Introducir un producto \n" +
+                        "5. Eliminar un producto \n" +
+                        "6. Actualizar el precio de un producto \n" +
+                        "7. Actualizar la cantidad de un producto \n" +
+                        "8. Salir"
+            )
+            val select = readln()
+            when (select) {
+                "1" -> {
+                    gest?.selectAllProducts()
+                }
+                "2" -> {
+                    println("Cual es el nombre del producto?")
+                    val name = readln()
+                    println(gest?.selectProduct(name))
+                }
+                "3" -> {
+                    println("Cual es el precio del producto?")
+                    var precio = 0.0
+                    try {
+                        precio = readln().toDouble()
+                    } catch (e: java.lang.Exception) {
+                        println("El precio debe ser double, EJ: 3.00")
+                    }
+                    gest?.selectProductosByPrecio(precio)
+
+                }
+                "4" -> {
+                    println("Que nombre tiene el producto?")
+                    val name = readln()
+                    println("Que precio tiene el producto (EJ: 100.00)")
+                    val precio = 0.0
+                    try {
+                        val precio = readln().toDouble()
+                    } catch (e: java.lang.Exception) {
+                        println("Error al leer el formato, siga el ejemplo")
+                    }
+                    println("Cantidad del producto (EJ: 20)")
+                    var cant = 0
+                    try {
+                        cant = readln().toInt()
+                    } catch (e: java.lang.Exception) {
+                        println("Error al leer el formato, siga el ejemplo")
+                    }
+                    println("Descripcion del producto")
+                    val desc = readln()
+                    gest?.insertProduct(name, precio, cant, desc)
+                }
+                "5" -> {
+                    println("Introduzca el nombre del producto que desea eliminar")
+                    val name = readln()
+                    if (gest?.deleteProduct(name) == false) {
+                        println("Vuelva a intentarlo")
+                    }
+
+                }
+                "6" -> {
+                    println("Introduzca el nombre del producto que desea actualizar")
+                    val name = readln()
+                    println("Introduzca el precio que desea que tenga el producto")
+                    var price = 0.0
+                    try {
+                        price = readln().toDouble()
+                    } catch (e: java.lang.Exception) {
+                        println("Error al actualizar")
+                    }
+                }
+                "7" -> {
+                    println("Introduzca el nombre del producto que desea actualizar")
+                    val name = readln()
+                    println("Introduzca la cantidad que desea que tenga el producto")
+                    var cantidad = 0
+                    try {
+                        cantidad = readln().toInt()
+                    } catch (e: java.lang.Exception) {
+                        println("Error al actualizar")
+                    }
+                }
+                "8" -> {comprobar = true}
+
+            }
         }
     }
 }
