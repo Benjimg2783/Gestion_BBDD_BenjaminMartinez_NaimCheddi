@@ -3,5 +3,5 @@ fun main(args: Array<String>) {
     val gui = Gui(gestor)
     gui.welcome()
     gui.inventory()
-
+    
 }

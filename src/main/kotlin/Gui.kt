@@ -75,7 +75,7 @@ class Gui(private val gest: GestorBBDD? = GestorBBDD.getInstance()) {
 
     fun inventory() {
         var comprobar = false
-        while (comprobar) {
+        while (!comprobar) {
             println("MENU INVENTARIO")
             println(
                 "1. Ver todos los productos \n" +
@@ -127,13 +127,13 @@ class Gui(private val gest: GestorBBDD? = GestorBBDD.getInstance()) {
                     }
                     println("Descripcion del producto")
                     val desc = readln()
-                    gest?.insertProduct(name, precio, cant, desc)
+                    if(gest?.insertProduct(name, precio, cant, desc)==false) println("Error al insertar, vuelva a intentarlo")
                 }
                 "5" -> {
                     println("Introduzca el nombre del producto que desea eliminar")
                     val name = readln()
                     if (gest?.deleteProduct(name) == false) {
-                        println("Vuelva a intentarlo")
+                        println("No se ha encontrado el producto, vuelva a intentarlo")
                     }
 
                 }
@@ -144,6 +144,9 @@ class Gui(private val gest: GestorBBDD? = GestorBBDD.getInstance()) {
                     var price = 0.0
                     try {
                         price = readln().toDouble()
+                        if(gest?.updateProductPrice(name,price)==false){
+                            println("No se ha encontrado $name")
+                        }
                     } catch (e: java.lang.Exception) {
                         println("Error al actualizar")
                     }
@@ -155,6 +158,9 @@ class Gui(private val gest: GestorBBDD? = GestorBBDD.getInstance()) {
                     var cantidad = 0
                     try {
                         cantidad = readln().toInt()
+                        if(gest?.updateProductAmount(name,cantidad)==false){
+                            println("No se ha encontrado $name")
+                        }
                     } catch (e: java.lang.Exception) {
                         println("Error al actualizar")
                     }
