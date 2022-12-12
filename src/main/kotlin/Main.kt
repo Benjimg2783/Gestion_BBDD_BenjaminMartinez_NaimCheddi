@@ -1,7 +1,7 @@
 fun main(args: Array<String>) {
-    val gestor=GestorBBDD.getInstance()
+    val gestor = GestorBBDD.getInstance()
     val gui = Gui(gestor)
-    gui.welcome()
-    gui.inventory()
-    
+    if (gui.welcome()) gui.inventory()
+
+
 }

@@ -10,8 +10,9 @@ class Gui(private val gest: GestorBBDD? = GestorBBDD.getInstance()) {
 
     }
 
-    fun welcome() {
+    fun welcome() : Boolean{
 
+        var checking = true
         var user = ""
         var pass = ""
         var answer = ""
@@ -26,10 +27,10 @@ class Gui(private val gest: GestorBBDD? = GestorBBDD.getInstance()) {
                 println("Usuario Correcto")
             } else {
                 println("El usuario o contraseña no son correctos o no existe en el sistema, ¿Que desea hacer? \n1.Volver a intentarlo\n2.Registrar el usuario")
-                val registro = readln()
+
                 var check = false
                 while (!check) {
-                    when (registro) {
+                    when (readln()) {
                         "1" -> {
                             println("Introduce el usuario")
                             user = readln()
@@ -39,13 +40,16 @@ class Gui(private val gest: GestorBBDD? = GestorBBDD.getInstance()) {
                                 check = true
                             } else {
                                 println("Usuario no encontrado")
+                                checking = false
                             }
                         }
                         "2" -> {
                             if (gest!!.insertUser(user, pass)) {
                                 println("¡Usuario registrado con exito!")
+                                check = true
                             } else {
                                 println("El usuario ya existe o caracteres invalidos")
+                                checking = false
                             }
 
                         }
@@ -71,6 +75,7 @@ class Gui(private val gest: GestorBBDD? = GestorBBDD.getInstance()) {
                 }
             } else println("Usuario no encontrado")
         }
+        return checking
     }
 
     fun inventory() {
